@@ -1,11 +1,11 @@
 import React from "react";
 import Link from "next/link";
-import Chords from "./Chords";
+import PlotIt from "./PlotIt";
 const Footer = () => {
   return (
     <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
       <p className="text-xs text-muted-foreground">
-        <Chords /> | &copy; {new Date().getFullYear()}{" "}
+        <PlotIt /> | &copy; {new Date().getFullYear()}{" "}
         <Link href="https://upsidedownlabs.tech/" target="_blank">
           Upside Down Labs
         </Link>
@@ -14,9 +14,9 @@ const Footer = () => {
         <Link
           className="text-xs hover:underline underline-offset-4"
           target="_blank"
-          href="https://docs.upsidedownlabs.tech/guides/index.html"
+          href="https://www.linkedin.com/posts/upsidedownlabs_step-to-improve-signal-quality-activity-7210620110040965120-_sOk?utm_source=share&utm_medium=member_desktop"
         >
-          Guides
+          Improve Signal Quality
         </Link>
         <Link
           className="text-xs hover:underline underline-offset-4"

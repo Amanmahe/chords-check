@@ -19,10 +19,9 @@ const config = {
     },
     extend: {
       fontFamily: {
-        rancho: ['Rancho', 'sans-serif'],
-      },
-      textShadow: {
-        'shadow-multiple': '1px 1px 2px rgba(0, 0, 0, 0.3), 0 0 5px rgba(0, 0, 0, 0.1)',
+        lobster: ["var(--font-lobster_two)"],
+        yanone: ["var(--font-yanone_kaffeesatz)"],
+        poppins: ["var(--font-poppins)"],
       },
       colors: {
         plot: "#21bbdc",

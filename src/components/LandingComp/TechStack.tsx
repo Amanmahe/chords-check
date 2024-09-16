@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
-import Chords from "./Chords";
+import PlotIt from "./PlotIt";
 
 const Stack = () => {
   const { theme } = useTheme();
@@ -14,14 +14,14 @@ const Stack = () => {
       name: "Next.js",
       logo:
         theme === "light"
-          ? "./assets/dark/next-js.png"
-          : "./assets/light/nextjs.svg",
+          ? "/assets/dark/next-js.png"
+          : "/assets/light/nextjs.svg",
       url: "https://nextjs.org/",
       description: "The fantastic React framework for building web apps.",
     },
     {
       name: "Tailwind CSS",
-      logo: "./assets/tailwindcss.svg",
+      logo: "/assets/tailwindcss.svg",
       url: "https://tailwindcss.com/",
       description: "A utility-first CSS framework for rapid UI development.",
     },
@@ -29,14 +29,14 @@ const Stack = () => {
       name: "shadcn/ui",
       logo:
         theme === "light"
-          ? "./assets/dark/ShadcnUI.png"
-          : "./assets/light/ShadcnUI.png",
+          ? "/assets/dark/ShadcnUI.png"
+          : "/assets/light/ShadcnUI.png",
       url: "https://ui.shadcn.com",
       description: "Built with amazing components from shadcn/ui.",
     },
     {
       name: "Smoothie Charts",
-      logo: "./assets/smoothie-logo.png",
+      logo: "/assets/smoothie-logo.png",
       url: "http://smoothiecharts.org/",
       description: "Timeseries charts for plotting the data real time.",
     },
@@ -44,8 +44,8 @@ const Stack = () => {
       name: "Web Serial Api",
       logo:
         theme === "light"
-          ? "./assets/dark/favicon.ico"
-          : "./assets/light/favicon.ico",
+          ? "/assets/dark/favicon.ico"
+          : "/assets/light/favicon.ico",
       url: "https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API",
       description: "For connecting to the serial port of the device.",
     },
@@ -53,8 +53,8 @@ const Stack = () => {
       name: "JSZip",
       logo:
         theme === "light"
-          ? "./assets/dark/favicon.ico"
-          : "./assets/light/favicon.ico",
+          ? "/assets/dark/favicon.ico"
+          : "/assets/light/favicon.ico",
       url: "https://stuk.github.io/jszip/",
       description: "For creating and downloading the recorded data zip files.",
     },
@@ -64,7 +64,7 @@ const Stack = () => {
       <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
         <div className="space-y-3">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-            <Chords /> is open-source, and free to use.
+            <PlotIt /> is open-source, and free to use.
           </h2>
           <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
             It is powered by the following technologies, that makes it super
@@ -101,7 +101,7 @@ const Stack = () => {
             <Button>Visualize Now &rarr;</Button>
           </Link>
           <Link
-            href="https://github.com/upsidedownlabs/Chords-Web"
+            href="https://github.com/upsidedownlabs/BioSignal-Recorder-Web"
             target="_blank"
           >
             <Button variant="outline">

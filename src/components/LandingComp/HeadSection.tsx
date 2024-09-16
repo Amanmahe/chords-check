@@ -1,38 +1,14 @@
 "use client";
-
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import { Button } from "../../components/ui/button";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { useTheme } from "next-themes";
-import Chords from "./Chords";
+import PlotIt from "./PlotIt";
 
-const HeadSection: React.FC = () => {
-  const { resolvedTheme } = useTheme();
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
-  const [mounted, setMounted] = useState(false); // Ensures the theme detection works after mounting
-
-  // Set mounted to true after the client has mounted
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Preload dark and light images to avoid delay on theme switch
-  const preloadImage = (src: string) => {
-    const img = new window.Image();
-    img.src = src;
-  };
-
-  // Preload images on component mount
-  useEffect(() => {
-    preloadImage("./assets/dark/HeroSignalsClean.png");
-    preloadImage("./assets/light/HeroSignalsClean.png");
-  }, []);
-
-  // If the component is not mounted yet, avoid rendering to prevent flickering
-  if (!mounted) return null;
-
+const HeadSection = () => {
+  const { theme } = useTheme();
   return (
     <>
       <section className="w-full pt-24">
@@ -40,30 +16,36 @@ const HeadSection: React.FC = () => {
           <div className="flex flex-col justify-center gap-8 items-center">
             <div>
               <h1 className="lg:leading-tighter text-[1.90rem] font-bold tracking-tighter sm:text-5xl md:text-6xl xl:text-[3.5rem] 2xl:text-[4rem] text-center">
-                <span className="text-7xl">Tune Into Your EXG Data</span>
-                <br /> With <Chords />
+                <span className="text-7xl">We Got Your Signal!</span>
+                <br /> Let&apos;s <PlotIt />
               </h1>
             </div>
             <div className="flex flex-col items-center space-y-4 text-center mt-4">
               <div className="space-x-4 flex">
                 <Link href="/stream">
                   <Button>
-                    <Image
-                      src={
-                        resolvedTheme === "dark"
-                          ? "./assets/dark/favicon.ico"
-                          : "./assets/light/favicon.ico"
-                      }
-                      width={16}
-                      height={16}
-                      alt="logo"
-                      className="mr-2"
-                    />
+                    {theme === "dark" ? (
+                      <Image
+                        src="/assets/dark/favicon.ico"
+                        width={16}
+                        height={16}
+                        alt="logo"
+                        className="mr-2"
+                      />
+                    ) : (
+                      <Image
+                        src="/assets/light/favicon.ico"
+                        width={16}
+                        height={16}
+                        alt="logo"
+                        className="mr-2"
+                      />
+                    )}
                     Visualize Now
                   </Button>
                 </Link>
                 <Link
-                  href="https://github.com/upsidedownlabs/Chords-Web"
+                  href="https://github.com/upsidedownlabs/BioSignal-Recorder-Web"
                   target="_blank"
                 >
                   <Button
@@ -78,30 +60,23 @@ const HeadSection: React.FC = () => {
             </div>
           </div>
         </div>
-
-        {/* Loader */}
-        {!isImageLoaded && (
-          <div className="loader">
-            <div className="spinner"></div>
-          </div>
+        {theme === "dark" ? (
+          <Image
+            src="/assets/dark/HeroSignalsClean.png"
+            alt="Plotter"
+            width={1000}
+            height={1000}
+            className="mx-auto mt-20 rounded"
+          />
+        ) : (
+          <Image
+            src="/assets/light/HeroSignalsClean.png"
+            alt="Plotter"
+            width={1000}
+            height={1000}
+            className="mx-auto mt-20 rounded"
+          />
         )}
-
-        {/* Image */}
-        <Image
-          src={
-            resolvedTheme === "dark"
-              ? "./assets/dark/HeroSignalsClean.png"
-              : "./assets/light/HeroSignalsClean.png"
-          }
-          alt="Plotter"
-          width={1000}
-          height={1000}
-          priority // Use priority to preload the image
-          className={`mx-auto mt-20 rounded transition-opacity duration-300 ${
-            isImageLoaded ? "opacity-100" : "opacity-0"
-          }`}
-          onLoadingComplete={() => setIsImageLoaded(true)}
-        />
       </section>
     </>
   );

@@ -20,7 +20,7 @@ import {
   List,
 } from "lucide-react";
 import { vendorsList } from "./vendors";
-import { BoardsList } from "./boards";
+import { BoardsList } from "./UDL_Boards";
 import { toast } from "sonner";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
@@ -37,7 +37,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { BitSelection } from "./DataPass";
+import { BitSelection } from "../app/page";
 
 import { Separator } from "./ui/separator";
 import {
@@ -166,19 +166,17 @@ const Connection: React.FC<ConnectionProps> = ({
     }
   };
   type Payload = {
-    message: Uint8Array;
-    counter:number;
+    message: String;
 };
+let previousCounter: number | null = null; // Variable to store the previous counter value for loss detection
 
   const connectToDevice = async () => {
     // Function to connect to the device
+    try {
       await listen<Payload>("updateSerial", (event: any) => {
-        let previousCounter: number | null = null; // Variable to store the previous counter value for loss detection
         // console.log(event.payload.counter);
-        const counter=event.payload.counter;
-        console.log(counter);
-        setIsConnected(true);
-        isConnectedRef.current = true;
+        const counter=event.payload.message[6];
+        // console.log(counter);
         if (previousCounter !== null) {
           // If there was a previous counter value
           const expectedCounter: number = (previousCounter + 1) % 256; // Calculate the expected counter value
@@ -201,10 +199,22 @@ const Connection: React.FC<ConnectionProps> = ({
       if (isRecordingRef.current) {
         bufferRef.current.push(event.payload.message); // Push the string array to the buffer if recording is on
       }
-
+      if(isConnected){
+        setIsConnected(false);
+        isConnectedRef.current = false;
+      }else{
+        setIsConnected(true);
+      }
      
     });
       await navigator.wakeLock.request("screen"); // Request the wake lock to keep the screen on
+    } catch (error) {
+      // If there is an error during connection, disconnect the device
+      disconnectDevice();
+      isConnectedRef.current = false;
+      setIsConnected(false);
+      console.error("Error connecting to device:", error);
+    }
   };
 
   const disconnectDevice = async (): Promise<void> => {

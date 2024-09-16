@@ -6,21 +6,21 @@ import {
   AccordionTrigger,
 } from "../../components/ui/accordion";
 import Link from "next/link";
-import Chords from "./Chords";
+import PlotIt from "./PlotIt";
 
 const FAQSection = () => {
   const FAQs: { question: string; answer: React.ReactNode }[] = [
     {
-      question: `What is the purpose of Chords?`,
+      question: `What is the purpose of plot it?`,
       answer: (
         <>
-          <Chords /> is made to plot biopotential signals like ECG, EMG or EOG
+          <PlotIt /> is made to plot biopotential signals like ECG, EMG or EOG
           in real time. It is made for educational & research purposes.
         </>
       ),
     },
     {
-      question: `What kind of data Chords collects?`,
+      question: `What kind of data plot it collects?`,
       answer: (
         <>
           It collects the biopotential data from the device connected to the
@@ -35,7 +35,7 @@ const FAQSection = () => {
         <>
           You can raise an issue or suggest an improvement on our{" "}
           <Link
-            href="https://github.com/upsidedownlabs/Chords-Web/issues"
+            href="https://github.com/upsidedownlabs/BioSignal-Recorder-Web/issues"
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-500 hover:underline underline-offset-4"
@@ -47,7 +47,7 @@ const FAQSection = () => {
       ),
     },
     {
-      question: "From where I can collect required hardware for Chords?",
+      question: "From where I can collect required hardware for plot it?",
       answer: (
         <>
           You can collect the required hardware from{" "}
@@ -64,10 +64,10 @@ const FAQSection = () => {
       ),
     },
     {
-      question: "What are the limitations of Chords?",
+      question: "What are the limitations of plot it?",
       answer: (
         <>
-          <Chords /> uses{" "}
+          <PlotIt /> uses{" "}
           <Link
             href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API"
             target="_blank"
@@ -100,15 +100,15 @@ const FAQSection = () => {
       ),
     },
     {
-      question: "What data format does Chords support?",
+      question: "What data format does Plot It support?",
       answer: (
         <>
-          Chords supports an array format: [counter, A0, A1, ..., A4], where
-          counter is a uint8_t (0-255) and A0-A4 are raw signal values. Array
+          Plot It supports an array format: [counter, A0, A1, ..., A6], where
+          counter is a uint8_t (0-255) and A0-A6 are raw signal values. Array
           example : [10, 468, 472, 463, 466, 465]. For implementation details,
           see our{" "}
           <Link
-            href="https://github.com/upsidedownlabs/Chords-Web/blob/main/ArduinoFirmware/ArduinoFirmware.ino"
+            href="https://github.com/upsidedownlabs/BioSignal-Recorder-Web/blob/main/ArduinoFirmware/ArduinoFirmware.ino"
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-500 hover:underline underline-offset-4"
@@ -120,11 +120,11 @@ const FAQSection = () => {
       ),
     },
     {
-      question: "Which microcontrollers are supported by Chords?",
+      question: "Which microcontrollers are supported by plot it?",
       answer: (
         <>
           Arduino Uno, Arduino Nano & Maker Uno are tested and supported by{" "}
-          <Chords />.
+          <PlotIt />.
         </>
       ),
     },
@@ -135,7 +135,7 @@ const FAQSection = () => {
         <>
           Yes, you just have to make sure that microcontroller is providing a
           compatible data format to the software. By doing this you can use any
-          microcontroller with <Chords />
+          microcontroller with <PlotIt />
         </>
       ),
     },

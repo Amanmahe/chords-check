@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "../ui/card";
 import Image from "next/image";
-import Chords from "./Chords";
+import PlotIt from "./PlotIt";
 
 export function Features() {
   const features: {
@@ -13,25 +13,25 @@ export function Features() {
       title: "Multi Channel Data Plot",
       description:
         "Plot data from multiple channels in different graphs. Each stream is different color coded for easy identification.",
-      image: "./assets/MultiChannel.jpg",
+      image: "/assets/MultiChannel.jpg",
     },
     {
       title: "Record & Save Data",
       description:
         "Record and save data for future reference. Export data in CSV/ZIP format for further analysis.",
-      image: "./assets/DownloadIcon.png",
+      image: "/assets/DownloadIcon.png",
     },
     {
       title: "AutoScale & Board Detection",
       description:
         "Automatically detects ADC of developement board to scale the graph accordingly. No need to manually set the scale.",
-      image: "./assets/Arduino.png",
+      image: "/assets/Arduino.png",
     },
     {
       title: "Freeze Stream",
       description:
         "Freeze the stream to analyze the data. Resume the stream when you are ready to continue.",
-      image: "./assets/Pause.png",
+      image: "/assets/Pause.png",
     },
   ];
   return (
@@ -40,10 +40,10 @@ export function Features() {
         <div className="flex flex-col items-center justify-center space-y-2 text-center">
           <div className="space-y-2 flex flex-col justify-center items-center">
             <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center">
-              <Chords /> is packed with features
+              <PlotIt /> is packed with features
             </h1>
             <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed text-center">
-              An overview of all the core features <Chords /> provides.
+              An overview of all the core features <PlotIt /> provides.
             </p>
           </div>
         </div>

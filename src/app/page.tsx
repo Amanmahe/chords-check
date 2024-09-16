@@ -1,57 +1,56 @@
-import React from "react";
+"use client";
+import { invoke } from "@tauri-apps/api/tauri";
+import { listen } from '@tauri-apps/api/event';
+import Connection from "../components/Connection";
 import Navbar from "../components/Navbar";
-import { Skeleton } from "../components/ui/skeleton";
-import dynamic from "next/dynamic";
-import Steps from "../components//LandingComp/Steps";
-import { Separator } from "../components/ui/separator";
-import { Features } from "../components/LandingComp/Features";
-import FAQSection from "../components/LandingComp/FAQSection";
-import Footer from "../components/LandingComp/Footer";
+import React, { useState,useEffect } from "react";
+import Canvas from "../components/Canvas";
+import Steps from "../components/Steps";
 
-const HeadSection = dynamic(
-  () => import("../components/LandingComp/HeadSection"),
-  {
-    loading: () => <SkeletonUI />,
-    ssr: false,
-  }
-);
+export type BitSelection = "ten" | "twelve" | "fourteen" | "auto";
 
-const TechStack = dynamic(() => import("../components/LandingComp/TechStack"), {
-  ssr: false,
-});
+const   Page = () => {
+  const [data, setData] = useState(""); // Data from the serial port
+  const [selectedBits, setSelectedBits] = useState<BitSelection>("auto"); // Selected bits
+  const [isConnected, setIsConnected] = useState<boolean>(false); // Connection status
+  const [isGridView, setIsGridView] = useState<boolean>(true); // Grid view state
+  const [isDisplay, setIsDisplay] = useState<boolean>(true); // Display state
 
-const SkeletonUI = () => (
-  <div className="container max-w-6xl mx-auto p-4 mt-24 space-y-8">
-    <div className="flex flex-col gap-4">
-      <Skeleton className="h-24 w-3/4 mx-auto" />
-      <Skeleton className="h-12 w-2/3 mx-auto" />
-    </div>
-    <div className="flex space-x-4 justify-center">
-      <Skeleton className="h-10 w-32" />
-      <Skeleton className="h-10 w-32" />
-    </div>
+  // // same as payload
+  // type Payload = {
+  //   connected: string;
+  // };
 
-    <Skeleton className="h-[1000px] w-full" />
-  </div>
-);
 
-const page = () => {
+
   return (
     <>
-      <div className="flex flex-col">
-        <HeadSection />
-        <Separator className="mt-20" />
+    
+    <Navbar />
+    
+    {/* {isConnected ? ( */}
+        <Canvas
+          data={data}
+          selectedBits={selectedBits}
+          isGridView={isGridView}
+          isDisplay={isDisplay}
+        />
+      {/* ) : (
         <Steps />
-        <Separator className="mt-20" />
-        <Features />
-        <Separator className="mt-20" />
-        <TechStack />
-        <Separator className="mt-20" />
-        <FAQSection />
-        <Footer />
-      </div>
+      )} */}
+      <Connection
+        LineData={setData}
+        Connection={setIsConnected}
+        selectedBits={selectedBits}
+        setSelectedBits={setSelectedBits}
+        isGridView={isGridView}
+        setIsGridView={setIsGridView}
+        isDisplay={isDisplay}
+        setIsDisplay={setIsDisplay}
+      />
+      
     </>
   );
 };
 
-export default page;
+export default Page;

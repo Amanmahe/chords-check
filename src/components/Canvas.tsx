@@ -9,8 +9,7 @@ import React, {
 } from "react";
 import { SmoothieChart, TimeSeries } from "smoothie";
 import { useTheme } from "next-themes";
-import { BitSelection } from "./DataPass";
-
+import { BitSelection } from "../app/page";
 interface CanvasProps {
   data: string;
   selectedBits: BitSelection;
@@ -25,6 +24,8 @@ const Canvas: React.FC<CanvasProps> = ({
   isDisplay,
 }) => {
   const { theme } = useTheme();
+  const [missingSamples, setMissingSamples] = useState(0); // State to store the number of missing samples
+
   const channels = useMemo(() => [true, true, true, true], []);
   const chartRef = useRef<SmoothieChart[]>([]);
   const seriesRef = useRef<(TimeSeries | null)[]>([]);
@@ -35,6 +36,7 @@ const Canvas: React.FC<CanvasProps> = ({
     () => [],
     []
   );
+  // const [data1,setData]=useState<string[][]>([[]]);
 
   const gridRef = useRef<HTMLDivElement>(null);
 
@@ -160,7 +162,42 @@ const Canvas: React.FC<CanvasProps> = ({
     // Clear the batch buffer after processing
     batchBuffer.length = 0;
   }, [channels, batchBuffer, isGlobalPaused]);
+console.log(data[6]);
+  // let previousCounter: number | null = null; // Variable to store the previous counter value for loss detection
 
+  // const connectToDevice = async () => {
+  //   // Simulate fetching data from the device
+  //   const counter = parseInt(data[6]);
+  
+  //   console.log('Previous Counter:', previousCounter);
+  //   // console.log('Current Counter:', counter);
+  
+  //   if (previousCounter !== null) {
+  //     // If there was a previous counter value
+  //     const expectedCounter: number = (previousCounter + 1) % 256; // Calculate the expected counter value
+  //     if (counter !== expectedCounter) {
+  //       // Check for data loss by comparing the current counter with the expected counter
+  //       const missingCount = counter > previousCounter
+  //         ? counter - expectedCounter
+  //         : 256 + (counter - expectedCounter); // Handle overflow case when counter wraps
+  
+  //       // Update the missing samples count
+  //       setMissingSamples((prevs) => prevs + missingCount);
+  //       console.warn(
+  //         `Data loss detected! Previous counter: ${previousCounter}, Current counter: ${counter}`
+  //       );
+  //     }
+  //   }
+  
+  //   previousCounter = counter; // Update the previous counter with the current counter
+  // };
+  
+  // // Example of calling connectToDevice repeatedly
+  // const startMonitoring = () => {
+  //   setInterval(connectToDevice, 1000); // Adjust the interval as needed
+  // };
+  
+  // startMonitoring();
   const handleDataUpdate = useCallback(
     (line: string) => {
       if (line.trim() !== "" && isDisplay) {
@@ -340,40 +377,39 @@ const Canvas: React.FC<CanvasProps> = ({
 
   return (
     <div className="flex flex-col justify-center items-start px-4 m-2 sm:m-4 md:m-6 lg:m-8 h-[60vh] sm:h-[70vh] md:h-[80vh]">
-      <div
-        ref={gridRef}
-        className={`grid ${
-          isGridView ? "md:grid-cols-2 grid-cols-1" : "grid-cols-1"
-        } w-full h-full relative`}
-        style={{
-          backgroundColor:
-            theme === "dark" ? "hsl(222.2, 84%, 4.9%)" : "hsl(0, 0%, 100%)",
-          color:
-            theme === "dark" ? "hsl(210, 40%, 98%)" : "hsl(222.2, 84%, 4.9%)",
-        }}
-      >
-        {channels.map((channel, index) => {
-          if (channel) {
-            return (
-              <div
-                key={index}
-                className={`border border-secondary-foreground w-full ${
-                  isGridView
-                    ? "h-[30vh] sm:h-[35vh] md:h-[40vh]"
-                    : "h-[15vh] sm:h-[18vh] md:h-[20vh]"
-                } relative`}
-              >
-                <canvas
-                  id={`smoothie-chart-${index + 1}`}
-                  className="w-full h-full"
-                />
-              </div>
-            );
-          }
-          return null;
-        })}
-      </div>
-    </div>
+  <div
+    ref={gridRef}
+    className={`grid ${isGridView ? "md:grid-cols-2 grid-cols-1" : "grid-cols-1"} w-full h-full relative`}
+    style={{
+      backgroundColor:
+        theme === "dark" ? "hsl(222.2, 84%, 4.9%)" : "hsl(0, 0%, 100%)",
+      color:
+        theme === "dark" ? "hsl(210, 40%, 98%)" : "hsl(222.2, 84%, 4.9%)",
+    }}
+  >
+    {channels.map((channel, index) => {
+      if (channel) {
+        return (
+          <div
+            key={index}
+            className={`border border-secondary-foreground w-full ${
+              isGridView
+                ? "h-[30vh] sm:h-[35vh] md:h-[40vh]"
+                : "h-[15vh] sm:h-[18vh] md:h-[20vh]"
+            } relative`}
+          >
+            <canvas
+              id={`smoothie-chart-${index + 1}`}
+              className="w-full h-full"
+            />
+          </div>
+        );
+      }
+      return null;
+    })}
+  </div>
+</div>
+
   );
 };
 

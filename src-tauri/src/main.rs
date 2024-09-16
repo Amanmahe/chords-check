@@ -13,7 +13,6 @@ const END_BYTE: u8 = 0x01;
 #[derive(Clone, serde::Serialize)]
 struct Payload {
     message: Vec<i16>,
-    counter:i16
 }
 
 pub fn auto_detect_arduino() -> Option<String> {
@@ -22,7 +21,7 @@ pub fn auto_detect_arduino() -> Option<String> {
         let port_name = port_info.port_name;
         println!("Attempting to connect to port: {}", port_name);
 
-        match serialport::new(&port_name, 115200)
+        match serialport::new(&port_name, 230400)
             .timeout(Duration::from_secs(1))
             .open()
         {
@@ -69,7 +68,7 @@ pub fn auto_detect_arduino() -> Option<String> {
 
                 println!("Final response from port {}: {}", port_name, response);
 
-                if !response.contains("UNO-R4") {
+                if !response.contains("UNO-R3") {
                     println!("No valid response from port: {}", port_name);
                 }
                 drop(port);
@@ -119,9 +118,12 @@ pub fn receive_arduino_data(port_name: &str, app_handle: AppHandle) {
                                         let low = packet[idx + 1] as i16;
                                         (high << 8) | low // Combine the two bytes into a 16-bit value
                                     }).collect();
-                                    println!("Received raw data: {:?}", data);
+                                    let mut data=data;
+                                    data.push(counter);
+
+                                    // println!("Received raw data: {:?}", data);
                                     // Emit the data to the frontend
-                                    app_handle.emit_all("updateSerial", Payload { message: data,counter:counter }).unwrap();
+                                    app_handle.emit_all("updateSerial", Payload { message: data}).unwrap();
                                     
                                 } else {
                                     // Invalid end byte, skip the packet
